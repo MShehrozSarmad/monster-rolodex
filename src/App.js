@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import './App.css';
-
+import CardList from './componenets/card-list/card-list-component';
+import SearchBox from './componenets/search-box/search-box.component';
 
 class App extends Component {
   constructor() {
@@ -9,18 +10,15 @@ class App extends Component {
       monsters: [],
       searchString: ''
     };
-    console.log('constructor');
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => this.setState(
         () => {
           return { monsters: users }
-        },
-        () => console.log(this.state)
+        }
       ))
   }
 
@@ -33,8 +31,8 @@ class App extends Component {
 
   render() {
     //optimization using es6 destructuring
-    const {monsters, searchString} = this.state;
-    const {onsearchChange} = this;
+    const { monsters, searchString } = this.state;
+    const { onsearchChange } = this;
     //method to filter monsters
     const filteredMonsters = monsters.filter((monster) => {
       return monster.name.toLocaleLowerCase().includes(searchString);
@@ -42,13 +40,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input className='search-box' placeholder='search monsters' type="search" onChange={
-          onsearchChange
-        } />
-        {filteredMonsters.map((monster) => {
-          return <h1 key={monster.id}>{monster.name}</h1>
-        })}
-        {console.log("rendered")}
+        <SearchBox className='monsters-search-box' placeholder='search monsters' onChangeHandler={onsearchChange} />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
