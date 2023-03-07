@@ -9,9 +9,9 @@ class CardList extends Component {
 
         return (
             <div className="card-list">
-                {monsters.map((monster) => {
+                {monsters.map((monster, index) => {
                     return (
-                        <Card monster={monster}/>
+                        <Card monster={monster} key={index}/>
                     );
                 })}
             </div>
